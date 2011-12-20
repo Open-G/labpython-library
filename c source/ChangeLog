@@ -1,0 +1,16 @@
+
+		ChangeLog file for pytscript shared library
+
+Changes in 1.0.0 (16 Sept 2002)
+- First public release.
+
+Changes in 1.0.1 (24 Sept 2002)
+- Fixed several errors in array conversion from and to Python.
+- Added String array data type to pass from and to Python.
+
+Changes in 1.2 (20 Okt 2006)
+- Linking default to Python 2.5
+- Removed all references to a specific version in the VI libary and icons
+- Fixed hang error when quitting LabPython. Thanks to Okko Willeboordse.
+- Separated script shared lib and LabVIEW VI library shared lib into two
+  different files.

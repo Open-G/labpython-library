@@ -1,0 +1,100 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "winuser.h"
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""winuser.h""\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+#include <winver.h>
+
+#ifndef VER_ORIGINALFILENAME_STR
+#define VER_ORIGINALFILENAME_STR
+#endif
+
+VS_VERSION_INFO VERSIONINFO 
+FILEVERSION    VER_FILEVERSION
+PRODUCTVERSION VER_PRODUCTVERSION
+FILEFLAGSMASK  VER_FILEFLAGSMASK
+FILEFLAGS      VER_FILEFLAGS
+FILEOS         VER_FILEOS
+FILETYPE       VER_FILETYPE
+FILESUBTYPE    VER_FILESUBTYPE
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904E4"
+        BEGIN 
+            VALUE "CompanyName"     	,VER_COMPANYNAME_STR
+            VALUE "FileDescription" 	,VER_FILEDESCRIPTION_STR
+            VALUE "FileVersion"     	,VER_FILEVERSION_STR
+            VALUE "InternalName"    	,VER_INTERNALNAME_STR
+            VALUE "LegalCopyright"  	,VER_LEGALCOPYRIGHT_STR
+            VALUE "OriginalFilename"	,VER_ORIGINALFILENAME_STR
+            VALUE "ProductName"     	,VER_PRODUCTNAME_STR
+            VALUE "ProductVersion"  	,VER_PRODUCTVERSION_STR
+            VALUE "Trademarks"			,VER_LEGALTRADEMARKS_STR
+        END 
+
+#ifdef INTL
+        BLOCK "040904E4"
+        BEGIN 
+            VALUE "CompanyName"     	,VER_COMPANYNAME_STR
+            VALUE "FileDescription" 	,VER_FILEDESCRIPTION_STR
+            VALUE "FileVersion"     	,VER_FILEVERSION_STR
+            VALUE "InternalName"    	,VER_INTERNALNAME_STR
+            VALUE "LegalCopyright"  	,VER_LEGALCOPYRIGHT_STR
+            VALUE "OriginalFilename"	,VER_ORIGINALFILENAME_STR
+            VALUE "ProductName"     	,VER_PRODUCTNAME_STR
+            VALUE "ProductVersion"  	,VER_PRODUCTVERSION_STR
+            VALUE "Trademarks"			,VER_LEGALTRADEMARKS_STR
+        END 
+#endif
+    END 
+ 
+    BLOCK "VarFileInfo" 
+    BEGIN 
+        /* the following line should be extended for localized versions */
+        VALUE "Translation", 0x0409, 0x04E4
+    END 
+END 
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+ID(IDI_PYTSCRIPT)		ICON	DISCARDABLE		"python.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+

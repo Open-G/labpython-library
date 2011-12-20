@@ -1,0 +1,199 @@
+/*
+ * Copyright (C) 2002 Rolf Kalbermatter
+ * License: GNU LGPL					
+ *
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2.1 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * A copy of the GNU Lesser General Public License is included in this
+ * distribution in the file COPYING.LIB. If you did not receive this copy
+ * write to the Free Software Foundation, Inc., 59 Temple Place,
+ * Suite 330, Boston, MA 02111-1307 USA.
+ *
+ * The home page for this project is at
+ *		http:/labpython.sourceforge.net
+ *
+ * If you modify anything useful, we would appreciate that you submit them
+ * at this homepage or post a message at the labpython mailinglist.
+ * You can join that mailinglist at
+ *		http://lists.sourceforge.net/lists/listinfo/labpython-users
+ */
+
+1. Introduction
+---------------
+This library is a shared library module intended to be used from LabVIEW.
+It's functionality is twofold. In the first place it exports an API which
+allows LabVIEW to make use of the Python system in it's scripting node
+available since LabVIEW 5.1.
+As a second option we have developed a library of VIs to access the
+functionality of this shared library directly from your LabVIEW program.
+This allows dynamic script execution and evaluation in a program.
+
+The shared library module is currently available for Windows 32 bit and
+Linux x86. The sources should compile on most of these systems without
+real problems. Of course it will be necessary for you to be familiar with
+your operating system and the tools necessary to build shared libraries.
+This project is by no means meant to be a tutorial on how to do that,
+although with a little determination you should be able to understand
+and learn from it a great deal.
+
+
+2 System Requirements
+---------------------
+
+It speaks for itself that in order for the LabPython extension to work, a
+working Python system must have been installed. This Python system is not
+part of this package and needs to be downloaded seperately. For system
+specific informations on how to obtain such a package refer to the actual
+plattform you are using.
+Also it won't do much good to you if you don't own a LabVIEW development
+system of course ;-)
+
+
+3 LabPython installation
+------------------------
+
+You can run the provided installer to install all the files in the necessary
+locations and after the installation has been finished and a working Python
+installation is available on your system, the script node in LabVIEW and the
+according Python Script Library should be working fine.
+
+In addition to the LabPython installation you also need a working Python
+installation for your plattform:
+
+3.1 Macintosh OS (not yet supported by LabPython)
+----------------
+
+MacPython is available through its maintainer at http://www.cwi.nl/~jack/macpython.html
+or the Python home page http://www.python.org or     
+
+
+3.2 Microsoft Win32
+-------------------
+
+To obtain a proper Python installation it is probably best to get the
+binary installer from http:/www.python.org. This will install the most
+recent stable version of Python on your system.
+
+Alternatively you can download the source package and compile your own
+system from it. This will require some knowledge about how to use Microsoft
+Visual C or a similar compiler able to create Win32 PE images. The provided
+files from the Python distribution for building Python with Visual C 6.0
+are in any case working well for me.
+For informations on how to compile Python yourself refer to the file
+PCbuild/readme.txt in your Python source installation.
+
+3.3 Linux x86
+-------------
+
+For Linux you have different choices depending on the Linux distribution
+you use. For the most recent versions of RedHat the Python home page at
+http:/www.python.org has RPM packages to download and install. A source
+RPM is available for all Linux distributions who know how to deal with RPMs.
+Most distributions should also come with their own Python package ready to
+be installed, however they may be sort of outdated. No tests on any Linux
+systems other than with the actual 2.2.1 source installation has been done.
+
+If your system can not cope with RPMs you need to download the source tarball
+and install it and compile Python in any case yourself.
+For informations on how to compile Python yourself refer to the file
+README in your Python source installation.
+
+
+4 Compiling your own LabPython shared library
+---------------------------------------------
+
+4.1 Macintosh OS
+----------------
+
+A Macintosh implementation for LabPython would be nice. There are however two
+difficulties with the current approach. The first is that MacPython is considerably
+different in some aspects. It tries to load and create its own windowing system
+which causes problems when embedding in another application as the application
+event loop is implemented in the container application (LabVIEW) and MacPython
+does not get the events handed correctly anymore. Theoretically it should be
+possible to just get the actual Python core to run on the Mac without the entire
+MacPython magic, but I'm not sure if that would work. There would be certainly
+problems in several of the Mac specific Python extension modules which depend on
+a proper MacPython environment.
+The second not so bad problem is that the loading of shared libraries on the Mac
+is different than anything else and therefore the pyimport.c module would need to
+be updated for support of full dynamic Python loading.
+
+Of course this could be eliminated by letting MacPython run as an independant app
+and implement some interapplication communication protocol in the LabPython shared
+library.
+
+Any Mac volunteers for either of these solutions?
+
+
+4.2 Microsoft Win32
+-------------------
+
+Why are you trying to get into trouble? Just install the binary Python installer
+and the LabPython package and use it!
+
+If you really want to build the dlls yourself there are some things
+to take care of. Obviously you need the C source files from labpython_c_source.
+The provided Visual C project files are for VC 6. If you have a different 
+VC version you will need to create your own project files with the existing
+ones as a guideline. Also you will need the Python sources (at least the
+include files) installed somewhere and you need to adjust the include paths
+for the Python source installation, and the <labview>/cintools directory.
+
+Also the library path in the project needs to point to your <labview>/cintools
+directory as well, and if you don't want to make use of the real dynamic linking
+option implemented in pyimport.c you also need to point the library import path
+to your <python source>/PCbuild library directory or wherever the pythonXX.lib
+import library is available.
+
+The define PY_NO_IMPORT_LIB controls if the Python shared library is linked in
+dynamically at runtime or semi-dynamically at load time of the pytscript shared
+library.
+
+
+4.3 Linux x86
+---------------
+
+For compilation under Linux you need to edit the Makefile to point the "prefix" variable
+to the correct location for your LabVIEW installation. "pyinclude" should be set to the
+directory where your Python include files are located.
+In a command shell change to the directory to where the sources have been
+installed and then type "make" eventually preceded by "make clean", which should
+take care about the creation of the pytscript$(VER).so shared library.
+ 
+"make install" will copy the just created shared library into the
+<labview>/resource/script directory where LabVIEW and the LabPython
+VIs can see it.
+
+The define PY_NO_IMPORT_LIB controls if the Python shared library is linked in
+dynamically at runtime or semi-dynamically at load time of the pytscript shared
+library. However since official Python before 2.3 will not support the creation
+of Python as a shared library this option is not currently used in the distributed
+LabPython extension and the Python core library libpython2.2.a from 2.2.1c2 is
+rather statically linked in.
+
+If you want to create a Python shared library to be able to use the option
+provided with PY_NO_IMPORT_LIB you will have to get a Python shared library
+installation.
+As explained Python 2.3 will allow to be created as shared library out of the
+box. Also some Linux distributions such a Debian apparently have earlier versions
+of Python already patched to allow for creation of Python as a shared library.
+Otherwise you need to patch the Python "configure.in" and "Makefile.pre.in"
+files to allow for shared library creation. The diff files in the Python2.2.1patch
+directory can be applied to a clean 2.2.1 source tree. Because you have modified
+the configure.in templete you need to run the autoconf tool to create a new
+configure script. After that specifying --enable-shared as argument to the
+./configure script will create a Makefile for the creation of a shared library.
+After that just continue with "make" and "make install" as you would otherwise.
+
+#defining PY_NO_IMPORT_LIB in the LapPython sources will then create a
+(significantly smaller) pytscript.so shared library to be put in the LabVIEW
+directory which will load and use the provided Python shared library.

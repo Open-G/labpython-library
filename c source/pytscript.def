@@ -1,0 +1,15 @@
+LIBRARY	pytscript
+EXPORTS
+lvsnCleanup
+lvsnCompile
+lvsnExecute
+lvsnFirstImplementedVersion
+lvsnGetLabVIEWData
+lvsnGetScript
+lvsnGetScriptName
+lvsnImplementsVersion
+lvsnInitNew
+lvsnLastImplementedVersion
+lvsnServerSupportTypes
+lvsnSetLabVIEWData
+lvsnSetScript
