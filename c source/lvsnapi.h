@@ -46,7 +46,11 @@ extern "C" {
 #if MSWin
 # ifdef _DEBUG
 #  define DEBUG	1
-#  define Debugger()	{__asm{int 3}}
+#  if ProcessorType==kX64
+#	define Debugger()	__debugbreak()
+#  else
+#	define Debugger()	{__asm{int 3}}
+#  endif
 #  define DebugPrintf		DbgPrintf
 # else
 #  define DEBUG	0
@@ -102,7 +106,17 @@ typedef struct {
 	LStrHandle elm[4];
 } **LStrArrayHdl;
 
-PrivateP(lvsnInstance);
+#if !defined(NIPrivatePtr)
+ #if defined(LV_PRIVATE_POINTER)
+  #define NIPrivatePtr(p) LV_PRIVATE_POINTER(p) // LV 8.5 - LV 2011
+ #elif defined(PrivatP)
+  #define NIPrivatePtr(p) PrivatP(p)            // <= LV 8.2.1
+ #else
+  #error Unsupported cintools headers 
+ #endif
+#endif
+
+NIPrivatePtr(lvsnInstance);
 
 /********************************************************************************/
 /*																				*/

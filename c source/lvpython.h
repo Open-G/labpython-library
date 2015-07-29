@@ -80,8 +80,7 @@ extern "C" {
   #define PyObject_Decref(op)	Py_DECREF(op)
  #endif
  #define Py_NonePtr		_Py_NoneStruct_Ptr
- #define Py_ZeroPtr		_Py_ZeroStruct_Ptr
- #define Py_FalsePtr	_Py_ZeroStruct_Ptr
+ #define Py_FalsePtr	_Py_FalseStruct_Ptr
  #define Py_TruePtr		_Py_TrueStruct_Ptr
 #else
  #define PyObject_TypeCheckNew(value, type)		\
@@ -91,7 +90,6 @@ extern "C" {
  #define PyObject_Decref(op)	Py_DECREF(op)
 
  #define Py_NonePtr Py_None
- #define Py_ZeroPtr Py_Zero
  #define Py_FalsePtr Py_False
  #define Py_TruePtr Py_True
 #endif
@@ -106,6 +104,8 @@ Bool32	PyChangePath(CStr token, Path path);
 # define PyUnloadServer() FALSE
 # define PyChangePath(token, path) TRUE
 #endif
+
+#define Py_isValidObject(o) (o && o != Py_NonePtr)
 
 lvsnAPI(Bool32) pysnSetServerPath(CStr token, Path path);
 lvsnAPI(Bool32) pysnScriptVariables(lvsnInstance inst, LStrArrayHdl names, LStrArrayHdl types);

@@ -84,6 +84,8 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
 static uChar LVPythonLib[] = "\014lvpython.dll";
 #elif Unix
 static uChar LVPythonLib[] = "\013lvpython.so";
+#elif MacOSX
+static uChar LVPythonLib[] = "\013lvpython.framework";
 #elif Mac
 static uChar LVPythonLib[] = "\016lvpython.shlib";
 #endif

@@ -121,8 +121,8 @@ static char *id="@(#) $Id: lvpython.c,v 1.23 2010/06/27 23:35:58 labviewer Exp $
 #ifdef PY_NO_IMPORT_LIB
 extern long * _Py_RefTotal_Ptr;
 extern PyObject * _Py_NoneStruct_Ptr;
-extern PyIntObject * _Py_ZeroStruct_Ptr;
-extern PyIntObject * _Py_TrueStruct_Ptr;
+extern PyObject * _Py_FalseStruct_Ptr;
+extern PyObject * _Py_TrueStruct_Ptr;
 extern PyTypeObject * PyComplex_Type_Ptr;
 extern PyTypeObject * PyFloat_Type_Ptr;
 extern PyTypeObject * PyInt_Type_Ptr;
@@ -643,7 +643,7 @@ lvsnAPI(Bool32) pysnScriptVariables(lvsnInstance inst, LStrArrayHdl names, LStrA
 	      PyObject *kl, *key, *val;
 	      CStr str;
 
-	      num = PyDict_Size(session->dl);
+	      num = (int32)PyDict_Size(session->dl);
 	      if (SetArraySize(&varTypes[kTDString], 0, 1L, (UHandle*)&names, num))
 	      {
 	        goto errOut;
@@ -943,7 +943,7 @@ static Bool32 PyErrorInfo(int32 *eStart, int32 *eEnd, CStr eText) {
 
 	if (PyObject_TypeCheckNew(mess, PyString_Type)) {
 		CStr t = (CStr)PyString_AsString(mess);
-		rest = Min(PyString_Size(mess), rest);
+		rest = Min((int32)PyString_Size(mess), rest);
 		StrNCpy(p, t, rest);
 	}
 /*	else if (PyTuple_Check(mess)) {
@@ -962,7 +962,7 @@ static Bool32 PyErrorInfo(int32 *eStart, int32 *eEnd, CStr eText) {
 		/* new style errors.  `mess' is an instance */
 
 		if ((v = PyObject_GetAttrString(mess, "offset"))) {
-			if (v && v != Py_NonePtr) {
+			if (Py_isValidObject(v)) {
 				long hold = PyInt_AsLong(v);
 				if (hold >= 0 && !PyErr_Occurred())
 					*eStart = (int32)hold;	
@@ -970,8 +970,8 @@ static Bool32 PyErrorInfo(int32 *eStart, int32 *eEnd, CStr eText) {
 			PyObject_Decref(v);
 		}
 		if ((v = PyObject_GetAttrString(mess, "text"))) {
-			if (v && v != Py_NonePtr) {
-				rest = Min(PyString_Size(v), rest);
+			if (Py_isValidObject(v)) {
+				rest = Min((int32)PyString_Size(v), rest);
 				StrNCpy(eText, (CStr)PyString_AsString(v), rest);
 			}
 			PyObject_Decref(v);
@@ -1027,14 +1027,14 @@ typedef struct {
 
 static MgErr PyArray_Attributes(PyObject *value, int32 *elms, int32 *dims) {
 	if (PyObject_TypeCheckNew(value, PyList_Type)) {
-		*elms = PyList_Size(value);
+		*elms = (int32)PyList_Size(value);
 		*dims = 1;
 		if (*elms) {
 			PyObject *item = PyList_GetItem(value, 0);
 			/* item is borrowed reference */
 
 			if (PyObject_TypeCheckNew(item, PyList_Type)) {
-				*elms *= PyList_Size(item);
+				*elms *= (int32)PyList_Size(item);
 				if (*elms) {
 					PyObject *o = PyList_GetItem(item, 0);
 					if (o && PyObject_TypeCheckNew(o, PyList_Type)) {
@@ -1092,7 +1092,7 @@ static MgErr PyArray_ToLVData(PyObject *value, int16 *tdp, int32 off, UPtr data)
 
 				for (i = 0; i < lvDims; i++, sp++) {
 					if (i < dims) {
-						*sp = PyList_Size(list);
+						*sp = (int32)PyList_Size(list);
 						list = PyList_GetItem(list, 0);
 					}
 					else {
@@ -1294,7 +1294,7 @@ static MgErr PyObject_ToLVString(PyObject *value, int16 *tdp, int32 off, UPtr da
 		return mgArgErr;
 	}
 
-	if ((len = PyString_Size(s))) {
+	if ((len = (int32)PyString_Size(s))) {
 		LStrHandle lstr = NULL;
 
 		switch (lvType = TDType(tdp, off)) {

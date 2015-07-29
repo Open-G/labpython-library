@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "lvpython", "lvpython.vcproj", "{FBFD36E7-7B72-4CC2-A22C-A1A97979560F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pytscript", "pytscript.vcproj", "{1B7C04D4-BC53-4E86-A452-5B8BF62F53C5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Debug|x64 = Debug|x64
+		Release|Win32 = Release|Win32
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FBFD36E7-7B72-4CC2-A22C-A1A97979560F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{FBFD36E7-7B72-4CC2-A22C-A1A97979560F}.Debug|Win32.Build.0 = Debug|Win32
+		{FBFD36E7-7B72-4CC2-A22C-A1A97979560F}.Debug|x64.ActiveCfg = Debug|x64
+		{FBFD36E7-7B72-4CC2-A22C-A1A97979560F}.Debug|x64.Build.0 = Debug|x64
+		{FBFD36E7-7B72-4CC2-A22C-A1A97979560F}.Release|Win32.ActiveCfg = Release|Win32
+		{FBFD36E7-7B72-4CC2-A22C-A1A97979560F}.Release|Win32.Build.0 = Release|Win32
+		{FBFD36E7-7B72-4CC2-A22C-A1A97979560F}.Release|x64.ActiveCfg = Release|x64
+		{FBFD36E7-7B72-4CC2-A22C-A1A97979560F}.Release|x64.Build.0 = Release|x64
+		{1B7C04D4-BC53-4E86-A452-5B8BF62F53C5}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1B7C04D4-BC53-4E86-A452-5B8BF62F53C5}.Debug|Win32.Build.0 = Debug|Win32
+		{1B7C04D4-BC53-4E86-A452-5B8BF62F53C5}.Debug|x64.ActiveCfg = Debug|x64
+		{1B7C04D4-BC53-4E86-A452-5B8BF62F53C5}.Debug|x64.Build.0 = Debug|x64
+		{1B7C04D4-BC53-4E86-A452-5B8BF62F53C5}.Release|Win32.ActiveCfg = Release|Win32
+		{1B7C04D4-BC53-4E86-A452-5B8BF62F53C5}.Release|Win32.Build.0 = Release|Win32
+		{1B7C04D4-BC53-4E86-A452-5B8BF62F53C5}.Release|x64.ActiveCfg = Release|x64
+		{1B7C04D4-BC53-4E86-A452-5B8BF62F53C5}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

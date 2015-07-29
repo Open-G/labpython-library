@@ -97,7 +97,7 @@ DefineExtFunc(gLib, int, PyDict_SetItemString, (PyObject *o, const char* k, PyOb
 DefineExtFunc(gLib, PyObject*, PyDict_New, (void), ());
 DefineExtFunc(gLib, PyObject*, PyDict_GetItem, (PyObject *o, PyObject *k), (o,k));
 DefineExtFunc(gLib, PyObject*, PyDict_GetItemString, (PyObject *o, const char* k), (o,k));
-DefineExtFunc(gLib, int, PyDict_Size, (PyObject *o), (o));
+DefineExtFunc(gLib, Py_ssize_t, PyDict_Size, (PyObject *o), (o));
 DefineExtFunc(gLib, PyObject*, PyDict_Keys, (PyObject *o), (o));
 DefineExtFunc(gLib, PyObject*, PyDict_Values, (PyObject *o), (o));
 DefineExtFuncVoid(gLib, PyEval_InitThreads, (void), ());
@@ -116,24 +116,24 @@ DefineExtFunc(gLib, PyObject*, PyFloat_FromDouble, (double d), (d));
 DefineExtFunc(gLib, PyObject*, PyImport_AddModule, (const char *n), (n));
 DefineExtFunc(gLib, PyObject*, PyInt_FromLong, (long l), (l));
 DefineExtFunc(gLib, long, PyInt_AsLong, (PyObject *o), (o));
-DefineExtFunc(gLib, PyObject*, PyList_New, (int s), (s));
-DefineExtFunc(gLib, PyObject*, PyList_GetItem, (PyObject *o, int i), (o,i));
-DefineExtFunc(gLib, int, PyList_SetItem, (PyObject *l, int i, PyObject *o), (l,i,o));
-DefineExtFunc(gLib, int, PyList_Size, (PyObject *l), (l));
+DefineExtFunc(gLib, PyObject*, PyList_New, (Py_ssize_t size), (size));
+DefineExtFunc(gLib, PyObject*, PyList_GetItem, (PyObject *o, Py_ssize_t i), (o,i));
+DefineExtFunc(gLib, int, PyList_SetItem, (PyObject *l, Py_ssize_t i, PyObject *o), (l,i,o));
+DefineExtFunc(gLib, Py_ssize_t, PyList_Size, (PyObject *l), (l));
 DefineExtFunc(gLib, long, PyLong_AsLong, (PyObject *o), (o));
 DefineExtFunc(gLib, PyObject*, PyLong_FromDouble, (double d), (d));
 DefineExtFunc(gLib, PyObject*, PyModule_GetDict, (PyObject *o), (o));
-//DefineExtFunc(gLib, PyObject*, PyNumber_Long, (PyObject *o), (o));
-//DefineExtFunc(gLib, PyObject*, PyNumber_Float, (PyObject *o), (o));
-//DefineExtFunc(gLib, int, PyNumber_Check, (PyObject *o), (o)); 
-//DefineExtFunc(gLib, int, PyObject_AsCharBuffer, (PyObject *o, const char **a, int *l), (o,a,l));
+DefineExtFunc(gLib, PyObject*, PyNumber_Long, (PyObject *o), (o));
+DefineExtFunc(gLib, PyObject*, PyNumber_Float, (PyObject *o), (o));
+DefineExtFunc(gLib, int, PyNumber_Check, (PyObject *o), (o)); 
+DefineExtFunc(gLib, int, PyObject_AsCharBuffer, (PyObject *o, const char **a, Py_ssize_t *l), (o,a,l));
 DefineExtFunc(gLib, PyObject*, PyObject_GetAttrString, (PyObject *o, const char *a), (o,a));
 DefineExtFunc(gLib, PyObject*, PyObject_Str, (PyObject *o), (o));
 DefineExtFunc(gLib, PyObject*, PyObject_Type, (PyObject *o), (o));
 DefineExtFunc(gLib, PyObject*, PyString_FromString, (const char* s), (s));
-DefineExtFunc(gLib, PyObject*, PyString_FromStringAndSize, (const char* s, int i), (s,i));
+DefineExtFunc(gLib, PyObject*, PyString_FromStringAndSize, (const char* s, Py_ssize_t i), (s,i));
 DefineExtFunc(gLib, char*, PyString_AsString, (PyObject* o), (o));
-DefineExtFunc(gLib, int, PyString_Size, (PyObject* o), (o));
+DefineExtFunc(gLib, Py_ssize_t, PyString_Size, (PyObject* o), (o));
 DefineExtFunc(gLib, PyThreadState*, PyThreadState_Swap, (PyThreadState *t), (t));
 DefineExtFunc(gLib, int, PyType_IsSubtype, (PyTypeObject *o1, PyTypeObject *o2), (o1, o2));
 
@@ -146,8 +146,9 @@ DefineExtFunc(gLib, int, PyType_IsSubtype, (PyTypeObject *o1, PyTypeObject *o2),
 long * _Py_RefTotal_Ptr = NULL;
 
 PyObject * _Py_NoneStruct_Ptr = NULL;
-PyIntObject * _Py_ZeroStruct_Ptr = NULL;
-PyIntObject * _Py_TrueStruct_Ptr = NULL;
+PyObject * _Py_FalseStruct_Ptr = NULL;
+PyObject * _Py_ZeroStruct_Ptr = NULL;
+PyObject * _Py_TrueStruct_Ptr = NULL;
 PyTypeObject * PyComplex_Type_Ptr = NULL;
 PyTypeObject * PyFloat_Type_Ptr = NULL;
 PyTypeObject * PyInt_Type_Ptr = NULL;
@@ -215,8 +216,13 @@ Bool32 PyLoadServer(void)
 	  }
 #endif
 	  LoadExtData(gLib, PyObject, _Py_NoneStruct);
-	  LoadExtData(gLib, PyIntObject, _Py_ZeroStruct);
-	  LoadExtData(gLib, PyIntObject, _Py_TrueStruct);
+	  LoadExtDataNoFail(gLib, PyObject, _Py_FalseStruct);
+	  if (!_Py_FalseStruct_Ptr)
+	  {
+		LoadExtData(gLib, PyObject, _Py_ZeroStruct);
+		_Py_FalseStruct_Ptr = _Py_ZeroStruct_Ptr;
+	  }
+	  LoadExtData(gLib, PyObject, _Py_TrueStruct);
 	  LoadExtData(gLib, PyTypeObject, PyComplex_Type);
 	  LoadExtData(gLib, PyTypeObject, PyFloat_Type);
 	  LoadExtData(gLib, PyTypeObject, PyInt_Type);

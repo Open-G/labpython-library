@@ -10,16 +10,22 @@ extern "C" {
 #include "extcode.h"
 #include "hosttype.h"
 
-#if Unix
-# include <dlfcn.h>
+#if Unix || MacOSX
+#define DLInterface 1
 #elif Mac
+#define FragInterface 1
+#endif
+
+#if DLInterface
+# include <dlfcn.h>
+#elif FragInterface
 # include <CodeFragments.h>
 #endif
 
 #if MSWin
 #define IMPORT_DECORATION _imp__
 typedef HMODULE ExtLib;
-#elif Unix
+#elif DLInterface
 #define IMPORT_DECORATION _
 typedef void* ExtLib;
 #else /* Mac */
@@ -28,7 +34,7 @@ typedef void* ExtLib;
 
 typedef int32 (*ProcPtr) (int32);
 
-ExtLib LoadExternalLib(CStr path);
+ExtLib LoadExternalLib(ConstCStr path);
 Bool32 FreeExternalLib(ExtLib lib);
 ProcPtr LoadExternalSym(ExtLib lib, CStr name);
 Bool32 LoadFuncIfNeeded(ExtLib lib, ProcPtr *ptr, CStr name);

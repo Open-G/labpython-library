@@ -27,12 +27,12 @@ static char *id="@(#) $Id: dynlib.c,v 1.4 2007/12/14 02:15:56 labviewer Exp $";
 
 #include "dynlib.h"
 
-ExtLib LoadExternalLib(CStr path) {
+ExtLib LoadExternalLib(ConstCStr path) {
 #if MSWin
-  return (ExtLib)LoadLibrary(path);
-#elif Mac
+  return (ExtLib)LoadLibraryA((LPCSTR)path);
+#elif FragInterface
   return NULL;
-#elif Unix
+#elif DLInterface
   return (ExtLib)dlopen ((char*)path, RTLD_LAZY);
 #else
   return NULL;
@@ -42,9 +42,9 @@ ExtLib LoadExternalLib(CStr path) {
 Bool32 FreeExternalLib(ExtLib lib) {
 #if MSWin
   return FreeLibrary(lib);
-#elif Mac
+#elif FragInterface
   return FALSE;
-#elif Unix
+#elif DLInterface
   return dlclose(lib);
 #else
   return FALSE;
@@ -54,9 +54,9 @@ Bool32 FreeExternalLib(ExtLib lib) {
 ProcPtr LoadExternalSym(ExtLib lib, CStr name) {
 #if MSWin
   return (ProcPtr)GetProcAddress(lib, name);
-#elif Mac
+#elif FragInterface
   return NULL;
-#elif Unix
+#elif DLInterface
   return (ProcPtr)dlsym(lib, (char*)name);
 #else
   return NULL;
