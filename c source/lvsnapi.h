@@ -101,22 +101,17 @@ extern "C" {
 #define lvsnFAILURE	0
 #define kMaxErrStringLength 0x400
 
-typedef struct {
+typedef struct
+{
 	int32 len;
 	LStrHandle elm[4];
 } **LStrArrayHdl;
 
-#if !defined(NIPrivatePtr)
- #if defined(LV_PRIVATE_POINTER)
-  #define NIPrivatePtr(p) LV_PRIVATE_POINTER(p) // LV 8.5 - LV 2011
- #elif defined(PrivatP)
-  #define NIPrivatePtr(p) PrivatP(p)            // <= LV 8.2.1
- #else
-  #error Unsupported cintools headers 
- #endif
+#if !defined(LV_PRIVATE_POINTER)
+ #define LV_PRIVATE_POINTER(p) PrivateP(p)            // >= LV 8.5
 #endif
 
-NIPrivatePtr(lvsnInstance);
+LV_PRIVATE_POINTER(lvsnInstance);
 
 /********************************************************************************/
 /*																				*/
