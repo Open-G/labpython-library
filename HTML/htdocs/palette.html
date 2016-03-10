@@ -1,0 +1,85 @@
+<HTML>
+<p><a href="/">&lt;== Back</a></p>
+<H2>Palette</H2>
+<img src="images/dir.mnu.png" width="248" height="195">
+
+<H3>Python 2.2 Script Node.vi</H3>
+<img src="images/Python 2.2 Script Node.vi.gif">
+<BR>
+<a href="scriptnode.html">Dropping</a> this node on the diagram places a script node preconfigured to use the Python script node interface library there. This script node can be operated similarily to the HIQ and Matlab script node. 
+<BR>
+<BR>
+<BR>
+<H3>PYTHON New Session.vi</H3>
+<img src="images/PYTHON New Session.vi.gif">
+<BR>
+This function makes sure the Python shared library is properly loaded and then creates a session context which is used to store the input and output variables, the human readable and compiled script, and any error state information which might occur during execution on this session refnum.
+<BR>
+<BR>
+<BR>
+<H3>PYTHON Compile Script.vi</H3>
+<img src="images/PYTHON Compile Script.vi.gif">
+<BR>
+This function compiles the previously assigned script text into a code stream. No evaluation is performed and therefore no input variables need to have been assigned at this point. A once compiled script can immediately get evaluated when you call the PYTHON Execute.vi. 
+<BR>
+<BR>
+<BR>
+<H3>PYTHON Close Session.vi</H3>
+<img src="images/PYTHON Close Session.vi.gif">
+<BR>
+Closes a Python script session and disposes of any resources assigned to this session.
+<BR>
+<BR>
+<BR>
+<H3>PYTHON Execute Script.vi</H3>
+<img src="images/PYTHON Execute Script.vi.gif">
+<BR>
+This function compiles the previously assigned script text, if this hasn't already be done and then evaluates the compiled script. Before calling this you should have assigned all necessary input variables to this session, as they are required during evalution of the compiled script.
+This function can be called multiple times for the same script with new assignments to only the input variables which have changed and the compiled script will then each time be reevaluated.
+<BR>
+<BR>
+<BR>
+<H3>PYTHON Set Server Path.vi</H3>
+<img src="images/PYTHON Set Server Path.vi.gif">
+<BR>
+This function configures the interface to use a particular Python shared library.
+<BR>
+<BR>
+<BR>
+<H3>PYTHON Set Script Text.vi</H3>
+<img src="images/PYTHON Set Script Text.vi.gif">
+<BR>
+This function assigns the script text to the specified session. Each session can only contain one script at any one time. Assigning a new script clears any previously created script, compiled script and variable data. 
+<BR>
+<BR>
+<BR>
+<H3>PYTHON Set Data.vi</H3>
+<img src="images/PYTHON Set Data.vi.gif">
+<BR>
+
+<BR>
+<BR>
+<BR>
+<H3>PYTHON Get Data.vi</H3>
+<img src="images/PYTHON Get Data.vi.gif">
+<BR>
+
+<BR>
+<BR>
+<BR>
+<H3>PYTHON Get Version and Types.vi</H3>
+<img src="images/PYTHON Get Version and Types.vi.gif">
+<BR>
+This function returns a version string indicating the Python version implemented in the Python shared library server, (Date and Time when the shared library was created), and [the compiler used to create that shared library].
+
+<BR>
+<BR>
+<BR>
+<H3>PYTHON Get Variables.vi</H3>
+<img src="images/PYTHON Get Variables.vi.gif">
+<BR>
+This function retrieves a list of all currently defined local variables and their type. Locale variables can have been set previously with the PYTHON Set <type> Data.vi functions and/or been generated or updated by a previous call to PYTHON Execute Script.vi.  
+<BR>
+<BR>
+<BR>
+</HTML>
